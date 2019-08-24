@@ -1,0 +1,44 @@
+<html>
+<head>
+
+    <title>Formas de Pagamentos</title>
+</head>
+<body>
+        <div>
+            <h2>Pagamento</h2>
+            <br>
+            <label for="valor"> Digite o valor da compra: </label>
+            <br>
+            <input id="valor" type="text" placeholder="Valor..." name="valor" required>
+        </div>
+
+        <div>
+            <br>
+            Qual a sua forma de pagamento?
+            <br><br>
+            <input id   ="avista"    type="radio" name="pagamento" value="avista">
+            <label for  ="avista">À VISTA</label>
+            <br><hr><br>
+            Parcelar em : <br>
+
+            <input id   ="parcelado2" type="radio" name="pagamento" value="parcelado2">
+            <label for  ="parcelado2"> 2 vezes </label>
+            <br>           
+            <input id   ="parcelado3" type="radio" name="pagamento" value="parcelado3">
+            <label for  ="parcelado3"> 3 vezes </label>
+            <br><hr><br>
+            <input id   ="dividido"  type="radio" name="pagamento" value="dividido">
+            <label for  ="dividido">DIVIDIDO 10 vezes </label>
+            <br><br><hr>
+        </div>
+
+        <div id="formaspag">
+            <p>Desconto e valor a pagar: </p>
+            <input  id  ="pagar"     type ="text" name="pagar">
+
+            <button>Calcular</button>
+        </div>
+
+        <script src="formapagamento.js"></script>
+</body>
+</html>
