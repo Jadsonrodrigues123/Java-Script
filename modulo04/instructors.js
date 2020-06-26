@@ -32,8 +32,7 @@ exports.show = function(request, response) {
                                       //split quebra em virgulas o conteudo do array
     services: foundInstructor.services.split(","),
 
-    //coloca um novo constructor com o metodo dateTimeformat retornando um obj na formatação pt-BR
-    //data atual
+    //fiz uma função igual a date mas com organização de data diferentes
     created_at: date_c(foundInstructor.created_at)
     
   }
@@ -134,7 +133,7 @@ exports.put = function(request, response) {
   fs.writeFile("data.json", JSON.stringify(data,null, 2), function(err) {
     if(err) return response.send('Erro de escrita!')
 
-    return response.redirect(`/instructors/${id}`)
+    return response.redirect(`/instructors/${id}`);
   })
 }
 
