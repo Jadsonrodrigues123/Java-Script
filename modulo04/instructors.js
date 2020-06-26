@@ -131,7 +131,7 @@ exports.put = function(request, response) {
   data.instructors[id - 1] = instructor
 
   fs.writeFile("data.json", JSON.stringify(data,null, 2), function(err) {
-    if(err) return response.send('Erro de escrita!')
+    if(err) return response.send('Erro de escrita!');
 
     return response.redirect(`/instructors/${id}`);
   })
