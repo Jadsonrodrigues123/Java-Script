@@ -5,7 +5,7 @@ const fs = require('fs');
 const data = require('./data.json');
 
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
-const { age, date } = require('./utils');
+const { age, date, date_c } = require('./utils');
 
 
 
@@ -34,7 +34,7 @@ exports.show = function(request, response) {
 
     //coloca um novo constructor com o metodo dateTimeformat retornando um obj na formatação pt-BR
     //data atual
-    created_at: new Intl.DateTimeFormat('pt-PT').format(foundInstructor.created_at)
+    created_at: date_c(foundInstructor.created_at)
     
   }
   console.log(instructor.hoje);
