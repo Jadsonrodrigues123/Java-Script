@@ -8,7 +8,6 @@ const data = require('./data.json');
 const { age, date, date_c } = require('./utils');
 
 
-
 //mostrar
 exports.show = function(request, response) {
   //pega o id que foi enviado pela url /:id e colca dentro do obj id
@@ -44,10 +43,9 @@ exports.show = function(request, response) {
 
 //criate
 exports.post = function(request, response) {
+  
   //Organiza os dados do body por chaves
-  const keys = Object.keys(request.body)
-
- 
+  const keys = Object.keys(request.body) 
 
   for (key of keys) {
     if (request.body[key] == "") {
@@ -85,7 +83,7 @@ exports.post = function(request, response) {
   fs.writeFile('data.json', JSON.stringify(data, null, 2 ), function(err) {
     if(err) return response.send('Erro na escrita do arquivo');
     
-    return response.render('instructors/index');
+    return response.redirect('/instructors');
   });
   
 }
@@ -117,23 +115,40 @@ exports.edit = function(request, response) {
 
 exports.put = function(request, response) {
   const { id } = request.body
-  const foundinstructor = data.instructors.find(function(instructor) {
+  const foundInstructor = data.instructors.find(function(instructor) {
     return id == instructor.id
   })
-  if(!foundinstructor) return response.send('Instrutor não encontrado!')
+  if(!foundInstructor) return response.send('Instrutor não encontrado!')
 
   const instructor = {
-    ...foundinstructor,
+    ...foundInstructor,
     ...request.body,
     birth: Date.parse(request.body.birth)
   }
 
   data.instructors[id - 1] = instructor
 
-  fs.writeFile("data.json", JSON.stringify(data,null, 2), function(err) {
+  fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
     if(err) return response.send('Erro de escrita!');
 
     return response.redirect(`/instructors/${id}`);
   })
 }
 
+//delete
+
+exports.delete = function(request, response) {
+  const { id } = request.body
+
+  const filteredInstructors = data.instructors.filter( function(instructor) {
+    return instructor.id != id
+  })
+
+  data.instructors = filteredInstructors
+
+  fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
+    if(err) return response.send("Erro na escrita do arquivo!")
+  })
+
+  return response.redirect('/instructors')
+}

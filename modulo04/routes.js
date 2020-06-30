@@ -21,7 +21,9 @@ routes.get('/instructors/:id/edit', instructors.edit);
 //rota POST ('/camiho url'), chama variavel externa junto com sua função
 routes.post('/instructors', instructors.post);
 
-routes.put('/instructors', instructors.put)
+routes.put('/instructors', instructors.put);
+
+routes.delete('/instructors', instructors.delete);
 
 
 
