@@ -1,0 +1,1 @@
+const currentPage = location.pathname

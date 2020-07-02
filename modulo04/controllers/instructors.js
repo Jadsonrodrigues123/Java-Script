@@ -2,13 +2,15 @@
 const fs = require('fs');
 
 //pega todos os dados dentro do data.json e coloca na variavel data
-const data = require('./data.json');
+const data = require('../data.json');
 
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
-const { age, date, date_c } = require('./utils');
+const { age, date, date_c } = require('../utils');
 
+exports.index = function(request, response) {
+  return response.render('instructors/index', { instructors: data.instructors })
+}
 
-//mostrar
 exports.show = function(request, response) {
   //pega o id que foi enviado pela url /:id e colca dentro do obj id
   const { id } = request.params;
@@ -41,7 +43,10 @@ exports.show = function(request, response) {
   return response.render('instructors/show', { instructor })
 }
 
-//criate
+exports.create = function(request, response) {
+  return response.render('instructors/create')
+}
+
 exports.post = function(request, response) {
   
   //Organiza os dados do body por chaves
@@ -88,7 +93,6 @@ exports.post = function(request, response) {
   
 }
 
-//editar
 exports.edit = function(request, response) {
 
   //pega o id que foi enviado pela url /:id e colca dentro do obj id
@@ -111,22 +115,27 @@ exports.edit = function(request, response) {
 
    return response.render('instructors/edit', { instructor })
 }
-//put
 
 exports.put = function(request, response) {
   const { id } = request.body
-  const foundInstructor = data.instructors.find(function(instructor) {
-    return id == instructor.id
+  let index = 0
+
+  const foundInstructor = data.instructors.find(function(instructor, foundIndex) {
+    if (id == instructor.id) {
+      index == foundIndex
+      return true
+    }
   })
   if(!foundInstructor) return response.send('Instrutor não encontrado!')
 
   const instructor = {
     ...foundInstructor,
     ...request.body,
-    birth: Date.parse(request.body.birth)
+    birth: Date.parse(request.body.birth),
+    id: Number(request.body.id)
   }
 
-  data.instructors[id - 1] = instructor
+  data.instructors[index] = instructor
 
   fs.writeFile("data.json", JSON.stringify(data, null, 2), function(err) {
     if(err) return response.send('Erro de escrita!');
@@ -134,8 +143,6 @@ exports.put = function(request, response) {
     return response.redirect(`/instructors/${id}`);
   })
 }
-
-//delete
 
 exports.delete = function(request, response) {
   const { id } = request.body
