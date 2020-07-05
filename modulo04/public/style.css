@@ -155,7 +155,7 @@ header {
 
 /* ===  FORM === */
 
-input {
+input, select {
   width: 100%;
   height: 35px;
   outline: none;
