@@ -5,7 +5,7 @@ const fs = require('fs');
 const data = require('../data.json');
 
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
-const { age, date, date_c } = require('../utils');
+const { age, date_nasc, date_c } = require('../utils');
 
 exports.index = function(request, response) {
   return response.render('instructors/index', { instructors: data.instructors })
@@ -37,7 +37,6 @@ exports.show = function(request, response) {
     created_at: date_c(foundInstructor.created_at)
     
   }
-  console.log(instructor.hoje);
 
   //rederiza a pagina , enviando o dado instructor, com o obj encontrado para a pág show.njk
   return response.render('instructors/show', { instructor })
@@ -110,7 +109,7 @@ exports.edit = function(request, response) {
 
   const instructor = {
     ...foundInstructor,
-    birth: date(foundInstructor.birth).iso
+    birth: date_nasc(foundInstructor.birth)
   }
 
    return response.render('instructors/edit', { instructor })
@@ -145,6 +144,7 @@ exports.put = function(request, response) {
 }
 
 exports.delete = function(request, response) {
+  
   const { id } = request.body
 
   const filteredInstructors = data.instructors.filter( function(instructor) {

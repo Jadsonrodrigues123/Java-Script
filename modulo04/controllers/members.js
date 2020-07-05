@@ -5,7 +5,7 @@ const fs = require('fs');
 const data = require('../data.json');
 
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
-const { date, date_c } = require('../utils');
+const { date, date_nasc } = require('../utils');
 
 
 exports.index = function(request, response) {
@@ -100,7 +100,7 @@ exports.edit = function(request, response) {
 
   const member = {
     ...foundMember,
-    birth: date(foundMember.birth).iso
+    birth: date_nasc(foundMember.birth)
   }
 
    return response.render('members/edit', { member })

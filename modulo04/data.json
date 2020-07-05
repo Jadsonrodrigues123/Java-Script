@@ -2,14 +2,14 @@
   "members": [
     {
       "id": 1,
-      "avatar_url": "https://images.unsplash.com/photo-1593358578790-0ed541155fe9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-      "name": "Luciano da Silva",
-      "email": "luciano@gmail.com",
-      "birth": 974246400000,
-      "gender": "M",
-      "blood": "O+",
-      "weight": "80",
-      "height": "185"
+      "avatar_url": "https://images.unsplash.com/photo-1593314731059-d6eb89748e65?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+      "name": "Juliana Alcantara",
+      "email": "juliana@gmail.com",
+      "birth": 966297600000,
+      "gender": "F",
+      "blood": "AB-",
+      "weight": "59",
+      "height": "177"
     }
   ],
   "instructors": [
