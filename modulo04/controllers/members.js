@@ -55,29 +55,21 @@ exports.post = function(request, response) {
     }
   }
 
-  //desestuturando o req.body para obter as variaveis disponíveis
-  let { avatar_url, birth, name, services, gender } = request.body
-
   //transforma o campo birth em data timestamp
-  birth = Date.parse(birth)
-  
-  //cria uma variavel pegando a data atual
-  const created_at = Date.now();
-  
-  //cria um id na forma numerica, length = tamanho do array + 1
-  const id = Number(data.members.length + 1)
+  birth = Date.parse(request.body.birth)
+    
+  let id = 1
+  const lastMember = data.members[data.members.length -1]
 
-
+  if (!lastMember) {
+    id = lastMember + 1
+  }
 
   //pega a variavel data .com o array "members". adiciona novas variaveis do req.body no array
   data.members.push({
     id,
-    name,
-    avatar_url,
-    birth,
-    gender,
-    services,
-    created_at
+    ...request.body,
+    birth
   });
 
  
