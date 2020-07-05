@@ -5,7 +5,7 @@ const fs = require('fs');
 const data = require('../data.json');
 
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
-const { age, date, date_c } = require('../utils');
+const { date, date_c } = require('../utils');
 
 
 exports.index = function(request, response) {
@@ -30,7 +30,7 @@ exports.show = function(request, response) {
   //espalha tudo que tem dentro do foundMember, sobresquevendo com as alterações abaixo
   const member = {
     ... foundMember,
-    age: age(foundMember.birth),
+    birth: date(foundMember.birth).birthDay
     
   }
   console.log(member.hoje);
@@ -61,8 +61,8 @@ exports.post = function(request, response) {
   let id = 1
   const lastMember = data.members[data.members.length -1]
 
-  if (!lastMember) {
-    id = lastMember + 1
+  if (lastMember) {
+    id = lastMember.id + 1
   }
 
   //pega a variavel data .com o array "members". adiciona novas variaveis do req.body no array
@@ -77,7 +77,7 @@ exports.post = function(request, response) {
   fs.writeFile('data.json', JSON.stringify(data, null, 2 ), function(err) {
     if(err) return response.send('Erro na escrita do arquivo');
     
-    return response.redirect('/members');
+    return response.redirect(`/members/${id}`);
   });
   
 }
@@ -100,7 +100,7 @@ exports.edit = function(request, response) {
 
   const member = {
     ...foundMember,
-    birth: date(foundMember.birth)
+    birth: date(foundMember.birth).iso
   }
 
    return response.render('members/edit', { member })
