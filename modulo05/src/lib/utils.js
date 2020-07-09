@@ -1,5 +1,5 @@
 module.exports = {
-  age: function(timestamp) {
+  age(timestamp) {
 
     //cria um novo Obj tipo data atual e coloca dentro do today
     const today = new Date()
@@ -22,7 +22,7 @@ module.exports = {
 
   },
 
-  date: function(timestamp) {
+  date(timestamp) {
     const date = new Date(timestamp)
     const year = date.getUTCFullYear()
     const month = `0${date.getUTCMonth() + 1}`.slice(-2)
@@ -37,7 +37,7 @@ module.exports = {
     }
   },
 
-  date_c: function(timestamp) {
+  date_c(timestamp) {
     const date = new Date(timestamp)
     const year = date.getUTCFullYear()
     const month = `0${date.getUTCMonth() + 1}`.slice(-2)
@@ -46,7 +46,7 @@ module.exports = {
     return `${day}-${month}-${year}`
   },
   
-  date_nasc: function(timestamp) {
+  date_nasc(timestamp) {
     const date = new Date(timestamp)
     const year = date.getUTCFullYear()
     const month = `0${date.getUTCMonth() + 1}`.slice(-2)
