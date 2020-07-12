@@ -32,11 +32,13 @@ module.exports = {
       day,
       month,
       year,
+      iso: `${day}-${month}-${year}`,
       birthDay: `${day} / ${month}`,
-      iso: `${day}-${month}-${year}`
+      format: `${year}/${month}/${year}`
     }
   },
 
+  // data do created_at
   date_c(timestamp) {
     const date = new Date(timestamp)
     const year = date.getUTCFullYear()
@@ -46,6 +48,7 @@ module.exports = {
     return `${day}-${month}-${year}`
   },
   
+  //data de nascimento ou aniversario
   date_nasc(timestamp) {
     const date = new Date(timestamp)
     const year = date.getUTCFullYear()

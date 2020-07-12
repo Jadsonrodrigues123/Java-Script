@@ -4,7 +4,7 @@ const { age, date_nasc, date_c } = require('../../lib/utils');
 
 module.exports = {
   index(request, response) {
-  return response.render('members/index', { members: data.members })
+  return response.render('members/index')
     
   },
 

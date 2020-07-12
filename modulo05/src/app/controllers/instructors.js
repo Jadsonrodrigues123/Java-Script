@@ -1,10 +1,13 @@
-
+const { date, age } = require('../../lib/utils');
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
-const { age, date_nasc, date_c } = require('../../lib/utils');
+const Instructor = require('../models/Instructor');
 
 module.exports = {
   index(request, response) {
-  return response.render('instructors/index', { instructors: data.instructors })
+     Instructor.all(function(instructors) {
+
+      return response.render('instructors/index', { instructors })
+     })    
     
   },
 
@@ -23,15 +26,23 @@ module.exports = {
         return response.send('Por favor preencha todos os campos');
       }
     }
+    Instructor.create(request.body, function(instructor) {
 
-    //desestuturando o req.body para obter as variaveis disponíveis
-    let { avatar_url, birth, name, services, gender } = request.body
+      return response.redurect(`/instructors/${instructor.id}`)
 
-    return
+    })
   },
 
   show(request, response) {
-    return
+    Instructor.find(request.params.id, function(instructor) {
+      if(!instructor) return response.send('Instrutor não encontrado!')
+
+      instructor.age = age(instructor.birth)
+      instructor.services = instructor.services.split(',')
+      instructor.created_at = date(instructor.created_at).format
+
+      return response.render('instructor/show', { instructor })
+    })
 
   },
 
