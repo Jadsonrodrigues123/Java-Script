@@ -1,41 +1,39 @@
-const { date_nasc, date_c } = require('../../lib/utils');
-const db = require('../../config/db');
+const db = require('../../config/db')
+const { date_c, age, date_nasc } = require('../../lib/utils');
 
 module.exports = {
   all(callback) {
-
     db.query(`SELECT * FROM instructors`, function(err, results) {
-      if(err) return response.send('Erro no banco de dados!');
+      if (err) return response.send('Database Error!')
 
       callback(results.rows)
-    });
-
+    })
   },
 
-  create(data, callback) {
-    
+  create(data) {
     const query = `
-        INSERT INTO instructors (
-          name,
-          avatar_url,
-          gender,
-          services,
-          birth,
-          created_at
-        ) VALUES ($1, $2, $3, $4, $5, $6)
-        RETURNING id 
+      INSERT INTO instructors (
+        name,
+        avatar_url
+        gender,
+        services,
+        birth,
+        created_at
+      ) VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id
     `
+
     const values = [
-      request.body.name,
-      request.body.avatar_url,
-      request.body.gender,
-      request.body.services,
-      date_nasc(request.body.birth).iso,
-      date_c(Date.now()).iso
+      data.name,
+      data.avatar_url,
+      data.gender,
+      data.services,
+      date_nasc(data.birth),
+      date_c(Date.now())
     ]
 
     db.query(query, values, function(err, results) {
-      if(err) return response.send('Erro no banco de dados!');
+      if(err) return response.send('Database Error!')
 
       callback(results.rows[0])
     })
@@ -43,11 +41,13 @@ module.exports = {
 
   find(id, callback) {
     db.query(`
-      SELECT * FORM instructors 
-      WHERE id = $1`, [id], function(err, results) {
-      if(err) return response.send('Erro no banco de dados!');
+      SELECT * FROM 
+      instructors WHERE id = $1`,
+      [id], function(err, results) {
 
-      callback(results.rows[0]);
+        if(err) response.send('Database Error!')
+
+        callback(results.rows[0])
     })
   }
 }

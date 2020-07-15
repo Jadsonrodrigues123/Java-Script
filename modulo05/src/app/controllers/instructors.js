@@ -1,11 +1,11 @@
-const { date, age } = require('../../lib/utils');
+const { age, date } = require('../../lib/utils');
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
 const Instructor = require('../models/Instructor');
 
 module.exports = {
   index(request, response) {
-     Instructor.all(function(instructors) {
 
+     Instructor.all(function(instructors) {
       return response.render('instructors/index', { instructors })
      })    
     
@@ -26,6 +26,7 @@ module.exports = {
         return response.send('Por favor preencha todos os campos');
       }
     }
+
     Instructor.create(request.body, function(instructor) {
 
       return response.redurect(`/instructors/${instructor.id}`)
@@ -41,7 +42,7 @@ module.exports = {
       instructor.services = instructor.services.split(',')
       instructor.created_at = date(instructor.created_at).format
 
-      return response.render('instructor/show', { instructor })
+      return response.render('instructors/show', { instructor })
     })
 
   },
