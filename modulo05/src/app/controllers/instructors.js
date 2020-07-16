@@ -1,4 +1,4 @@
-const { age, date } = require('../../lib/utils');
+const { age, date_c, date_nasc, date } = require('../../lib/utils');
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
 const Instructor = require('../models/Instructor');
 
@@ -29,7 +29,7 @@ module.exports = {
 
     Instructor.create(request.body, function(instructor) {
 
-      return response.redurect(`/instructors/${instructor.id}`)
+      return response.redirect(`/instructors/${instructor.id}`)
 
     })
   },
@@ -48,8 +48,13 @@ module.exports = {
   },
 
   edit(request, response) {
+    Instructor.find(request.params.id, function(instructor) {
+      if(!instructor) return response.send('Instrutor não encontrado!')
 
-    return
+      instructor.birth = date(instructor.birth)
+      
+      return response.render('instructors/edit', { instructor })
+    })
 
   },
 
@@ -63,7 +68,10 @@ module.exports = {
       }
     }
     
-    return
+    Instructor.update(request.body, function() {
+
+      return response.redirect(`/instructors/${request.body.id}`)
+    })
 
   },
 

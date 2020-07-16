@@ -1,5 +1,5 @@
 const db = require('../../config/db')
-const { date_c, age, date_nasc } = require('../../lib/utils');
+const { date_c, age, date_nasc, date } = require('../../lib/utils');
 
 module.exports = {
   all(callback) {
@@ -10,7 +10,7 @@ module.exports = {
     })
   },
 
-  create(data) {
+  create(data, callback) {
     const query = `
       INSERT INTO instructors (
         name,
@@ -28,8 +28,8 @@ module.exports = {
       data.avatar_url,
       data.gender,
       data.services,
-      date_nasc(data.birth),
-      date_c(Date.now())
+      date(data.birth).iso,
+      date(Date.now()).iso
     ]
 
     db.query(query, values, function(err, results) {
@@ -42,12 +42,38 @@ module.exports = {
   find(id, callback) {
     db.query(`
       SELECT * FROM 
-      instructors WHERE id = $1`,
-      [id], function(err, results) {
-
+      instructors WHERE id = $1`, [id], function(err, results) {
         if(err) response.send('Database Error!')
 
         callback(results.rows[0])
+    })
+  },
+
+  update(data, callback) {
+    const query =  `
+      UPDATE instructors SET
+      avatar_url=($1),
+      name=($2),
+      birth=($3),
+      gender=($4),
+      services=($5)
+
+      WHERE id = $6
+    `
+
+    const values = [
+      data.avatar_url,
+      data.name,
+      date(data.birth).iso,
+      data.gender,
+      data.services,
+      data.id
+    ]
+
+    db.query(query, values, function(err, results) {
+      if (err) return response.send('Erro no Banco de dados!')
+
+      callback()
     })
   }
 }

@@ -34,7 +34,7 @@ module.exports = {
       year,
       iso: `${day}-${month}-${year}`,
       birthDay: `${day} / ${month}`,
-      format: `${year}/${month}/${year}`
+      format: `${day}/${month}/${year}`
     }
   },
 
@@ -45,7 +45,7 @@ module.exports = {
     const month = `0${date.getUTCMonth() + 1}`.slice(-2)
     const day = `0${date.getUTCDate()}`.slice(-2)
 
-    return `${day}-${month}-${year}`
+    return `${day}/${month}/${year}`
   },
   
   //data de nascimento ou aniversario
