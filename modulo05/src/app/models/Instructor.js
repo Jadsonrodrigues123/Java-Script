@@ -1,5 +1,5 @@
 const db = require('../../config/db')
-const { date_c, age, date_nasc, date } = require('../../lib/utils');
+const { date } = require('../../lib/utils');
 
 module.exports = {
   all(callback) {
@@ -14,7 +14,7 @@ module.exports = {
     const query = `
       INSERT INTO instructors (
         name,
-        avatar_url
+        avatar_url,
         gender,
         services,
         birth,
@@ -22,7 +22,6 @@ module.exports = {
       ) VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id
     `
-
     const values = [
       data.name,
       data.avatar_url,

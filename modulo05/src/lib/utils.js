@@ -18,12 +18,13 @@ module.exports = {
           today.getDate() <= birthDate.getDate()) {
           age = age - 1    
     }  
-    return age
+    return age;
 
   },
 
   date(timestamp) {
     const date = new Date(timestamp)
+
     const year = date.getUTCFullYear()
     const month = `0${date.getUTCMonth() + 1}`.slice(-2)
     const day = `0${date.getUTCDate()}`.slice(-2)
@@ -32,29 +33,29 @@ module.exports = {
       day,
       month,
       year,
-      iso: `${day}-${month}-${year}`,
-      birthDay: `${day} / ${month}`,
+      iso: `${year}-${month}-${day}`,
+      birthDay: `${day}/${month}`,
       format: `${day}/${month}/${year}`
     }
-  },
-
-  // data do created_at
-  date_c(timestamp) {
-    const date = new Date(timestamp)
-    const year = date.getUTCFullYear()
-    const month = `0${date.getUTCMonth() + 1}`.slice(-2)
-    const day = `0${date.getUTCDate()}`.slice(-2)
-
-    return `${day}/${month}/${year}`
-  },
-  
-  //data de nascimento ou aniversario
-  date_nasc(timestamp) {
-    const date = new Date(timestamp)
-    const year = date.getUTCFullYear()
-    const month = `0${date.getUTCMonth() + 1}`.slice(-2)
-    const day = `0${date.getUTCDate()}`.slice(-2)
-
-    return `${year}-${month}-${day}`
   }
+
+  // // data do created_at
+  // date_c(timestamp) {
+  //   const date = new Date(timestamp)
+  //   const year = date.getUTCFullYear()
+  //   const month = `0${date.getUTCMonth() + 1}`.slice(-2)
+  //   const day = `0${date.getUTCDate()}`.slice(-2)
+
+  //   return `${day}/${month}/${year}`
+  // },
+  
+  // //data de nascimento ou aniversario
+  // date_nasc(timestamp) {
+  //   const date = new Date(timestamp)
+  //   const year = date.getUTCFullYear()
+  //   const month = `0${date.getUTCMonth() + 1}`.slice(-2)
+  //   const day = `0${date.getUTCDate()}`.slice(-2)
+
+  //   return `${year}-${month}-${day}`
+  //}
 }
