@@ -4,7 +4,7 @@ const { date } = require('../../lib/utils');
 module.exports = {
   all(callback) {
     db.query(`SELECT * FROM instructors`, function(err, results) {
-      if (err) return response.send('Database Error!')
+      if (err) throw `Erro no Banco de dados! ${err}`
 
       callback(results.rows)
     })
@@ -32,7 +32,7 @@ module.exports = {
     ]
 
     db.query(query, values, function(err, results) {
-      if(err) return response.send('Database Error!')
+      if(err) throw `Erro no Banco de dados! ${err}`
 
       callback(results.rows[0])
     })
@@ -42,7 +42,7 @@ module.exports = {
     db.query(`
       SELECT * FROM 
       instructors WHERE id = $1`, [id], function(err, results) {
-        if(err) response.send('Database Error!')
+        if(err) throw `Erro no Banco de dados! ${err}`
 
         callback(results.rows[0])
     })
@@ -70,7 +70,7 @@ module.exports = {
     ]
 
     db.query(query, values, function(err, results) {
-      if (err) return response.send('Erro no Banco de dados!')
+      if (err) throw `Erro no Banco de dados! ${err}`
 
       callback()
     })
