@@ -12,8 +12,10 @@ module.exports = {
   },
 
   create(request, response) {
-  return response.render('members/create')
 
+    Member.instructorsSelectOptions(function(options) {
+      return response.render('members/create', { instructorOptions: options })
+    })
   },
 
   post(request, response) {    
@@ -50,8 +52,10 @@ module.exports = {
       if(!member) return response.send('Instrutor não encontrado!')
 
       member.birth = date(member.birth).iso
-      
-      return response.render('members/edit', { member })
+
+      Member.instructorsSelectOptions(function(options) {
+        return response.render('members/edit', { member, instructorOptions: options })
+      })
     })
 
   },
