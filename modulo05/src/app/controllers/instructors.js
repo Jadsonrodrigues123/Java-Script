@@ -75,8 +75,10 @@ module.exports = {
   },
 
   delete(request, response) {
+    Instructor.delete(request.body.id, function() {
 
-    return
+      return response.redirect(`/instructors`)
+    })
 
   },
 }

@@ -1,10 +1,13 @@
-
+const { age, date } = require('../../lib/utils');
 //desestrutura o Obj age importando ele(e funções) de outro arquivo
-const { age, date_nasc, date_c } = require('../../lib/utils');
+const Member = require('../models/Member');
 
 module.exports = {
   index(request, response) {
-  return response.render('members/index')
+
+     Member.all(function(members) {
+      return response.render('members/index', { members })
+     })    
     
   },
 
@@ -13,8 +16,7 @@ module.exports = {
 
   },
 
-  post(request, response) {
-    
+  post(request, response) {    
     //Organiza os dados do body por chaves
     const keys = Object.keys(request.body) 
 
@@ -24,20 +26,33 @@ module.exports = {
       }
     }
 
-    //desestuturando o req.body para obter as variaveis disponíveis
-    let { avatar_url, birth, name, services, gender } = request.body
+    Member.create(request.body, function(member) {
 
-    return
+      return response.redirect(`/members/${member.id}`)
+
+    })
   },
 
   show(request, response) {
-    return
+    Member.find(request.params.id, function(member) {
+      if(!member) return response.send('Instrutor não encontrado!')
+
+      member.age = age(member.birth)
+      member.created_at = date(member.created_at).format
+
+      return response.render('members/show', { member })
+    })
 
   },
 
   edit(request, response) {
+    Member.find(request.params.id, function(member) {
+      if(!member) return response.send('Instrutor não encontrado!')
 
-    return
+      member.birth = date(member.birth).iso
+      
+      return response.render('members/edit', { member })
+    })
 
   },
 
@@ -51,13 +66,18 @@ module.exports = {
       }
     }
     
-    return
+    Member.update(request.body, function() {
+
+      return response.redirect(`/members/${request.body.id}`)
+    })
 
   },
 
   delete(request, response) {
+    Member.delete(request.body.id, function() {
 
-    return
+      return response.redirect(`/members`)
+    })
 
-  },
+  }
 }
